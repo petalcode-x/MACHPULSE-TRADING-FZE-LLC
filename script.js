@@ -255,7 +255,11 @@ function showProductCategory(category) {
    show ONLY the 5 Bearings products.
 */
 
-showProductCategory("bearings");
+if (productCards.length > 0) {
+
+  showProductCategory("bearings");
+
+}
 
 
 /* ========================================================= */
@@ -556,6 +560,7 @@ window.addEventListener("scroll", () => {
     const sectionHeight =
       section.offsetHeight;
 
+
     if (
       window.scrollY >= sectionTop &&
       window.scrollY < sectionTop + sectionHeight
@@ -586,3 +591,126 @@ window.addEventListener("scroll", () => {
   });
 
 });
+
+
+/* ========================================================= */
+/* ========== ABOUT + ELECTRICAL SCROLL ANIMATION ========== */
+/* ========================================================= */
+
+/*
+   ABOUT SECTION
+
+   Image:
+   Starts slightly toward the centre
+   and moves to the LEFT.
+
+   Text:
+   Starts slightly toward the centre
+   and moves to the RIGHT.
+
+
+   ELECTRICAL SECTION
+
+   Text:
+   Starts slightly toward the centre
+   and moves to the LEFT.
+
+   Image:
+   Starts slightly toward the centre
+   and moves to the RIGHT.
+*/
+
+
+const animatedAboutSections = document.querySelectorAll(
+  ".about-section, .electrical-about-section"
+);
+
+
+if (animatedAboutSections.length > 0) {
+
+  const aboutObserver = new IntersectionObserver(
+    (entries, observer) => {
+
+      entries.forEach((entry) => {
+
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+
+        const section =
+          entry.target;
+
+
+        const image =
+          section.querySelector(".about-photo");
+
+
+        const text =
+          section.querySelector(
+            ".about-copy, .electrical-about-copy"
+          );
+
+
+        /* Animate image */
+
+        if (image) {
+
+          image.classList.add("about-visible");
+
+        }
+
+
+        /* Animate text */
+
+        if (text) {
+
+          text.classList.add("about-visible");
+
+        }
+
+
+        /* Animate only once */
+
+        observer.unobserve(section);
+
+      });
+
+    },
+    {
+      threshold: 0.20
+    }
+  );
+
+
+  animatedAboutSections.forEach((section) => {
+
+    aboutObserver.observe(section);
+
+  });
+
+}
+
+
+/* ========================================================= */
+/* ================= REDUCED MOTION ======================== */
+/* ========================================================= */
+
+/*
+   Respect users who have enabled
+   reduced motion in their device settings.
+*/
+
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+
+  document
+    .querySelectorAll(
+      ".about-copy, .electrical-about-copy, .about-photo > img"
+    )
+    .forEach((element) => {
+
+      element.classList.add("about-visible");
+
+    });
+
+}
