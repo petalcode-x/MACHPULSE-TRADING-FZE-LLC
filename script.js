@@ -412,7 +412,7 @@ const formMessage =
 
 if (quoteForm) {
 
-  quoteForm.addEventListener("submit", (event) => {
+  quoteForm.addEventListener("submit", function (event) {
 
     event.preventDefault();
 
@@ -441,7 +441,7 @@ if (quoteForm) {
 
 
     const subject =
-      `Machinery Spare Parts Enquiry - ${category}`;
+      "Machinery Spare Parts Enquiry - " + category;
 
 
     const emailBody =
@@ -461,20 +461,32 @@ ${message}
 Thank you.`;
 
 
-    const mailtoLink =
-      `mailto:salesmachpulse@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-
+    /* Show message */
 
     if (formMessage) {
 
       formMessage.textContent =
-        "Your enquiry is ready. Opening your email application...";
+        "Opening Gmail...";
 
     }
 
 
-    window.location.href =
-      mailtoLink;
+    /* Open Gmail compose window */
+
+    const gmailURL =
+      "https://mail.google.com/mail/?view=cm" +
+      "&fs=1" +
+      "&to=salesmachpulse@gmail.com" +
+      "&su=" +
+      encodeURIComponent(subject) +
+      "&body=" +
+      encodeURIComponent(emailBody);
+
+
+    window.open(
+      gmailURL,
+      "_blank"
+    );
 
   });
 
